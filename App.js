@@ -10,6 +10,8 @@ const PRODUCTS = [
   { id: '5', name: 'Monitor', price: 249 },
 ];
 
+const broken = ;
+
 export default function App() {
   // 2. State for the user's search text
   const [searchQuery, setSearchQuery] = useState('');
