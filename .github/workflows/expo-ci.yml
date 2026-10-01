@@ -1,0 +1,45 @@
+name: Expo CI
+
+on:
+  push:
+    branches:
+      - main
+      - feature/products
+      - ci/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Expo checks
+    runs-on: ubuntu-latest
+
+    env:
+      CI: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check Expo dependencies
+        run: npx expo install --check
+
+      - name: Build web app
+        run: npm run build:web
